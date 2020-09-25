@@ -51,7 +51,8 @@ class Form extends Model
      */
     public function user()
     {
-        return $this->belongsTo(config('formbuilder.models.user'));
+        // return $this->belongsTo(config('formbuilder.models.user'));
+        return $this->hasMany(User::class);
     }
 
     /**
