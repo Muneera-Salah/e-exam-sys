@@ -8,6 +8,7 @@ Last Updated: 12/29/2018
 // namespace jazmy\FormBuilder\Models;
 namespace App;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HtmlString;
@@ -47,7 +48,8 @@ class Submission extends Model
      */
     public function user()
     {
-        return $this->belongsTo(config('formbuilder.models.user'));
+        // return $this->belongsTo(config('formbuilder.models.user'));
+        return $this->belongsTo(User::class);
     }
 
     /**
