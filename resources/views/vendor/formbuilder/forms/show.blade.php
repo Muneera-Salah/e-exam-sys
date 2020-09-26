@@ -11,18 +11,21 @@
 
                         <div class="btn-toolbar float-md-right" role="toolbar">
                             <div class="btn-group" role="group">
+
                                 <a href="{{ route('formbuilder::forms.index') }}" class="btn btn-primary float-md-right btn-sm back-icon">
                                     <i class="fa fa-arrow-left"></i>
                                 </a>
                                 <a href="{{ route('formbuilder::forms.submissions.index', $form) }}" class="btn btn-primary float-md-right btn-sm data-icon">
                                     <i class="fa fa-th-list"></i> Submissions
                                 </a>
+                                @if (Auth::user()->isAdmin())
                                 <a href="{{ route('formbuilder::forms.edit', $form) }}" class="btn btn-primary float-md-right btn-sm edit-icon">
                                     <i class="fa fa-edit"></i> Edit
                                 </a>
                                 <a href="{{ route('formbuilder::forms.create') }}" class="btn btn-primary float-md-right btn-sm">
                                     <i class="fa fa-plus-circle"></i> New Form
                                 </a>
+                                @endif
                             </div>
                         </div>
                     </h5>

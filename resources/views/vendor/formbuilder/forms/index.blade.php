@@ -54,12 +54,12 @@
                                             @if (Auth::user()->isAdmin() or Auth::user()->isExamMaker() or Auth::user()->isStudent())
                                                 <td>{{ $loop->iteration }}</td>
                                             @endif
-                                            @if (Auth::user()->isAdmin())
+                                            @if (Auth::user()->isAdmin() or Auth::user()->isExamMaker())
                                                 <td><a
                                                         href="{{ route('formbuilder::forms.show', $form) }}">{{ $form->name }}</a>
                                                 </td>
                                             @endif
-                                            @if (Auth::user()->isExamMaker() or Auth::user()->isStudent())
+                                            @if (Auth::user()->isStudent())
                                                 <td>{{ $form->name }}</td>
                                             @endif
                                             <td>

@@ -35,7 +35,7 @@ class FormController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin.role')->except(['index']);
+        $this->middleware('admin.role')->except(['index', 'show']);
     }
 
     /**
@@ -84,7 +84,7 @@ class FormController extends Controller
         DB::beginTransaction();
 
         // generate a random identifier
-        $input['identifier'] = $user->id.'-'.Helper::randomString(20);
+        $input['identifier'] = $user->id . '-' . Helper::randomString(20);
         $created = Form::create($input);
 
         try {
@@ -94,11 +94,11 @@ class FormController extends Controller
             DB::commit();
 
             return response()
-                    ->json([
-                        'success' => true,
-                        'details' => 'Form successfully created!',
-                        'dest' => route('formbuilder::forms.index'),
-                    ]);
+                ->json([
+                    'success' => true,
+                    'details' => 'Form successfully created!',
+                    'dest' => route('formbuilder::forms.index'),
+                ]);
         } catch (Throwable $e) {
             info($e);
 
@@ -122,10 +122,10 @@ class FormController extends Controller
         //             ->withCount('submissions')
         //             ->firstOrFail();
 
-        $form = Form::where('id' , $id)
-                    ->with('user')
-                    ->withCount('submissions')
-                    ->firstOrFail();
+        $form = Form::where('id', $id)
+            ->with('user')
+            ->withCount('submissions')
+            ->firstOrFail();
 
         $pageTitle = "Preview Form";
         $courses = Course::all();
@@ -152,7 +152,7 @@ class FormController extends Controller
         // get the roles to use to populate the make the 'Access' section of the form builder work
         $form_roles = Helper::getConfiguredRoles();
         $courses = Course::all();
-        return view('formbuilder::forms.edit', compact('form', 'pageTitle', 'saveURL', 'form_roles','courses'));
+        return view('formbuilder::forms.edit', compact('form', 'pageTitle', 'saveURL', 'form_roles', 'courses'));
     }
 
     /**
@@ -175,11 +175,11 @@ class FormController extends Controller
             event(new FormUpdated($form));
 
             return response()
-                    ->json([
-                        'success' => true,
-                        'details' => 'Form successfully updated!',
-                        'dest' => route('formbuilder::forms.index'),
-                    ]);
+                ->json([
+                    'success' => true,
+                    'details' => 'Form successfully updated!',
+                    'dest' => route('formbuilder::forms.index'),
+                ]);
         } else {
             response()->json(['success' => false, 'details' => 'Failed to update the form.']);
         }
