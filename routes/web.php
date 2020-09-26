@@ -20,9 +20,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/courses', 'CourseController@index')->name('courses.index');
 Route::get('/courses/add', 'CourseController@create')->name('courses.form');
 Route::post('/courses/add', 'CourseController@store')->name('courses.add');
+
+Route::get('/users', 'UserController@index')->name('users.index');
+Route::get('/users/add', 'UserController@create')->name('users.form');
+Route::post('/users/add', 'UserController@store')->name('users.add');
 
 Route::middleware('web')
     ->prefix(config('formbuilder.url_path', '/form-builder'))

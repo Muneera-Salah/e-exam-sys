@@ -39,6 +39,9 @@
                 @else
                     @if (Auth::user()->isAdmin())
                         <li class="nav">
+                            <a class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                        </li>
+                        <li class="nav">
                             <a class="nav-link" href="{{ route('courses.index') }}">{{ __('Courses') }}</a>
                         </li>
                     @endif
