@@ -183,7 +183,7 @@ class Submission extends Model
         if ($type == 'file') {
             if (!empty($this->content[$key])) {
                 $file_link = Storage::url($this->content[$key]);
-                $str = "<a href='{$file_link}'>{$str}</a>";
+                $str = "<a href='{$file_link}'>File link</a>";
             } else {
                 $str = "No file";
             }
