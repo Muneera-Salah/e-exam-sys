@@ -53,9 +53,15 @@
                                         <tr>
                                             @if (Auth::user()->isAdmin() or Auth::user()->isExamMaker() or Auth::user()->isStudent())
                                                 <td>{{ $loop->iteration }}</td>
+                                            @endif
+                                            @if (Auth::user()->isAdmin())
                                                 <td><a
                                                         href="{{ route('formbuilder::forms.show', $form) }}">{{ $form->name }}</a>
                                                 </td>
+                                            @endif
+                                            @if (Auth::user()->isExamMaker() or Auth::user()->isStudent())
+                                            <td>{{ $form->name }}</td>
+                                            @endif
                                                 <td>
                                                     @foreach ($courses as $course)
                                                         @if ($course->id == $form->course_id)
