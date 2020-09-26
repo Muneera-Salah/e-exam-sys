@@ -11,21 +11,21 @@
 
                         <div class="btn-toolbar float-md-right" role="toolbar">
                             <div class="btn-group" role="group">
-                                <a href="{{ route('formbuilder::forms.index') }}" class="btn btn-sm btn-primary float-md-right">
+                                <a href="{{ route('formbuilder::forms.index') }}" class="btn btn-sm btn-primary float-md-right back-icon">
                                     <i class="fa fa-arrow-left"></i> Back To My Forms
                                 </a>
-                                <button class="btn btn-primary btn-sm clipboard" data-clipboard-text="{{ route('formbuilder::form.render', $form->identifier) }}" data-message="Link Copied" data-original="Copy Form Link" title="Copy form URL to clipboard">
+                                <button class="btn btn-primary btn-sm clipboard link-icon" data-clipboard-text="{{ route('formbuilder::form.render', $form->identifier) }}" data-message="Link Copied" data-original="Copy Form Link" title="Copy form URL to clipboard">
                                     <i class="fa fa-clipboard"></i> Copy Form Link
-                                </button> 
+                                </button>
                             </div>
                         </div>
                     </h5>
                 </div>
 
                 <form action="{{ route('formbuilder::forms.update', $form) }}" method="POST" id="createFormForm" data-form-method="PUT">
-                    @csrf 
+                    @csrf
                     @method('PUT')
-                    
+
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -88,7 +88,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="alert alert-info" role="alert">
-                                    <i class="fa fa-info-circle"></i> 
+                                    <i class="fa fa-info-circle"></i>
                                     Click on or Drag and drop components onto the main panel to build your form content.
                                 </div>
 
@@ -100,8 +100,8 @@
 
                 <div class="card-footer" id="fb-editor-footer" style="display: none;">
                     <button type="button" class="btn btn-primary fb-clear-btn">
-                        <i class="fa fa-remove"></i> Clear Form 
-                    </button> 
+                        <i class="fa fa-remove"></i> Clear Form
+                    </button>
                     <button type="button" class="btn btn-primary fb-save-btn">
                         <i class="fa fa-save"></i> Submit &amp; Save Form
                     </button>
@@ -116,7 +116,7 @@
     <script type="text/javascript">
         window.FormBuilder = window.FormBuilder || {}
         window.FormBuilder.form_roles = @json($form_roles);
-        
+
         window._form_builder_content = {!! json_encode($form->form_builder_json) !!}
     </script>
     <script src="{{ asset('vendor/formbuilder/js/create-form.js') }}{{ jazmy\FormBuilder\Helper::bustCache() }}" defer></script>

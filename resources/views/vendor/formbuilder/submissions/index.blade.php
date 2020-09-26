@@ -9,7 +9,7 @@
                     <h5 class="card-title">
                         {{ $pageTitle }} ({{ $submissions->count() }})
 
-                        <a href="{{ route('formbuilder::forms.index') }}" class="btn btn-primary float-md-right btn-sm">
+                        <a href="{{ route('formbuilder::forms.index') }}" class="btn btn-primary float-md-right btn-sm back-icon">
                             <i class="fa fa-arrow-left"></i> Back To Forms
                         </a>
                     </h5>
