@@ -60,16 +60,15 @@
                                                 </td>
                                             @endif
                                             @if (Auth::user()->isExamMaker() or Auth::user()->isStudent())
-                                            <td>{{ $form->name }}</td>
+                                                <td>{{ $form->name }}</td>
                                             @endif
-                                                <td>
-                                                    @foreach ($courses as $course)
-                                                        @if ($course->id == $form->course_id)
-                                                            {{ $course->title }}
-                                                        @endif
-                                                    @endforeach
-                                                </td>
-                                            @endif
+                                            <td>
+                                                @foreach ($courses as $course)
+                                                    @if ($course->id == $form->course_id)
+                                                        {{ $course->title }}
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             @if (Auth::user()->isAdmin())
                                                 <td>{{ $form->visibility }}</td>
                                                 <td>{{ $form->allowsEdit() ? 'YES' : 'NO' }}</td>
