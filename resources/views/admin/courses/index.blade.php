@@ -33,10 +33,10 @@
                                     <tbody>
                                         @foreach ($courses as $course)
                                             <tr>
-                                                <th>{{ $course->id }}</th>
-                                                <th>{{ $course->title }}</th>
-                                                <th>{{ $course->description }}</th>
-                                                <th>{{ $course->created_at }}</th>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $course->title }}</td>
+                                                <td>{{ $course->description }}</td>
+                                                <td>{{ $course->created_at }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
