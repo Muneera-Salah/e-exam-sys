@@ -19,9 +19,11 @@ use App\Events\Form\FormUpdated;
 use App\Form;
 use jazmy\FormBuilder\Helper;
 use Illuminate\Http\Request;
-use jazmy\FormBuilder\Requests\SaveFormRequest;
+// use jazmy\FormBuilder\Requests\SaveFormRequest;
+use App\Requests\SaveFormRequest;
 use Illuminate\Support\Facades\DB;
 use Throwable;
+use App\Course;
 
 class FormController extends Controller
 {
@@ -46,8 +48,8 @@ class FormController extends Controller
         $pageTitle = "Forms";
 
         $forms = Form::getForUser(auth()->user());
-
-        return view('formbuilder::forms.index', compact('pageTitle', 'forms'));
+        $courses = Course::all();
+        return view('formbuilder::forms.index', compact('pageTitle', 'forms', 'courses'));
     }
 
     /**
@@ -63,8 +65,8 @@ class FormController extends Controller
 
         // get the roles to use to populate the make the 'Access' section of the form builder work
         $form_roles = Helper::getConfiguredRoles();
-
-        return view('formbuilder::forms.create', compact('pageTitle', 'saveURL', 'form_roles'));
+        $courses = Course::all();
+        return view('formbuilder::forms.create', compact('pageTitle', 'saveURL', 'form_roles', 'courses'));
     }
 
     /**
@@ -126,8 +128,8 @@ class FormController extends Controller
                     ->firstOrFail();
 
         $pageTitle = "Preview Form";
-
-        return view('formbuilder::forms.show', compact('pageTitle', 'form'));
+        $courses = Course::all();
+        return view('formbuilder::forms.show', compact('pageTitle', 'form', 'courses'));
     }
 
     /**
@@ -149,8 +151,8 @@ class FormController extends Controller
 
         // get the roles to use to populate the make the 'Access' section of the form builder work
         $form_roles = Helper::getConfiguredRoles();
-
-        return view('formbuilder::forms.edit', compact('form', 'pageTitle', 'saveURL', 'form_roles'));
+        $courses = Course::all();
+        return view('formbuilder::forms.edit', compact('form', 'pageTitle', 'saveURL', 'form_roles','courses'));
     }
 
     /**

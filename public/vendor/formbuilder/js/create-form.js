@@ -13,7 +13,7 @@ jQuery(function() {
 
     // create the form editor
     var fbEditor = $(document.getElementById('fb-editor'))
-    var formBuilder 
+    var formBuilder
     var fbOptions = {
         dataType: 'json',
         formData: window._form_builder_content ? window._form_builder_content : '',
@@ -76,7 +76,7 @@ jQuery(function() {
     fbClearBtn.click(function(e) {
         e.preventDefault()
 
-        if (! formBuilder.actions.getData().length) return 
+        if (! formBuilder.actions.getData().length) return
 
         sConfirm("Are you sure you want to clear all fields from the form?", function() {
             formBuilder.actions.clearFields()
@@ -94,7 +94,7 @@ jQuery(function() {
         var form = $('#createFormForm')
 
         // make sure the form is valid
-        if ( ! form.parsley().validate() ) return 
+        if ( ! form.parsley().validate() ) return
 
         // make sure the form builder is not empty
         if (! formBuilder.actions.getData().length) {
@@ -120,6 +120,7 @@ jQuery(function() {
                 name: $('#name').val(),
                 visibility: $('#visibility').val(),
                 allows_edit: $('#allows_edit').val(),
+                course_id: $('#course_id').val(),
                 form_builder_json: formBuilderJSONData,
                 _token: window.FormBuilder.csrfToken
             }
@@ -137,7 +138,7 @@ jQuery(function() {
                 fbClearBtn.removeAttr('disabled')
 
                 if (response.success) {
-                    // the form has been created 
+                    // the form has been created
                     // send the user to the form index page
                     swal({
                         title: "Form Saved!",

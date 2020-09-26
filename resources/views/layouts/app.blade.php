@@ -35,6 +35,17 @@
                     <i class="fa fa-laptop" aria-hidden="true"></i>
                     {{ config('app.name', 'eExam system') }}
                 </a>
+                @guest
+                @else
+                    @if (Auth::user()->isAdmin())
+                        <li class="nav">
+                            <a class="nav-link" href="{{ route('courses.index') }}">{{ __('Courses') }}</a>
+                        </li>
+                    @endif
+                    <li class="nav">
+                        <a class="nav-link" href="/form-builder/forms">{{ __('Forms') }}</a>
+                    </li>
+                @endguest
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
@@ -68,9 +79,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
-                                                                 <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                             document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                                         {{ __('Logout') }}
                                     </a>
 
@@ -89,7 +101,10 @@
             @yield('content')
         </main>
     </div>
-
+    <br />
+    <br />
+    <br />
+    <br />
     <footer class="blog-footer">
         <p>Developed with <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
             by <a href="https://github.com/Muneera-Salah" target="_blank" class="footer-link">@Muneera_Salah</a> | 2020

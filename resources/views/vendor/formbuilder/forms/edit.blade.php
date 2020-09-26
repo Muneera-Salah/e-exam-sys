@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">
@@ -41,6 +41,27 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="course_id" class="col-form-label">Course</label>
+
+                                    <select name="course_id" id="course_id" class="form-control" required="required">
+                                        <option value="">Select Form courses</option>
+                                        @foreach($courses as  $course)
+                                        <option value="{{ $course->id }}" @if($form->course_id == $course['id']) selected @endif >{{ $course->title }}</option>
+
+                                        @endforeach
+                                    </select>
+
+                                    @if ($errors->has('course_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('course_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="visibility" class="col-form-label">Form Visibility</label>

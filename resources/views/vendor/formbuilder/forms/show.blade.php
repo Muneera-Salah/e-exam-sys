@@ -1,7 +1,7 @@
 @extends('formbuilder::layout')
 
 @section('content')
-<div class="">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card rounded-0">
@@ -51,6 +51,15 @@
                         <a href="{{ route('formbuilder::form.render', $form->identifier) }}" class="float-right" target="_blank">
                             {{$form->identifier}}
                         </a>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Course: </strong> <span class="float-right">
+                            @foreach ($courses as $course)
+                                @if ($course->id == $form->course_id)
+                                    {{ $course->title }}
+                                @endif
+                            @endforeach
+                    </span>
                     </li>
                     <li class="list-group-item">
                         <strong>Visibility: </strong> <span class="float-right">{{ $form->visibility }}</span>

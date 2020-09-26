@@ -36,6 +36,7 @@
                                         @if (Auth::user()->isAdmin() or Auth::user()->isExamMaker() or Auth::user()->isStudent())
                                             <th class="five">#</th>
                                             <th>Name</th>
+                                            <th>Course Name</th>
                                         @endif
                                         @if (Auth::user()->isAdmin())
                                             <th class="ten">Visibility</th>
@@ -52,7 +53,16 @@
                                         <tr>
                                             @if (Auth::user()->isAdmin() or Auth::user()->isExamMaker() or Auth::user()->isStudent())
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td><a href="{{ route('formbuilder::forms.show', $form) }}">{{ $form->name }}</a></td>
+                                                <td><a
+                                                        href="{{ route('formbuilder::forms.show', $form) }}">{{ $form->name }}</a>
+                                                </td>
+                                                <td>
+                                                    @foreach ($courses as $course)
+                                                        @if ($course->id == $form->course_id)
+                                                            {{ $course->title }}
+                                                        @endif
+                                                    @endforeach
+                                                </td>
                                             @endif
                                             @if (Auth::user()->isAdmin())
                                                 <td>{{ $form->visibility }}</td>
@@ -70,11 +80,12 @@
                                                     </a>
                                                 @endif
                                                 @if (Auth::user()->isAdmin())
-                                                   {{--  <a href="{{ route('formbuilder::forms.show', $form) }}"
+                                                    {{-- <a
+                                                        href="{{ route('formbuilder::forms.show', $form) }}"
                                                         class="btn btn-primary btn-sm"
                                                         title="Preview form '{{ $form->name }}'">
                                                         <i class="fa fa-eye"></i>
-                                                    </a>  --}}
+                                                    </a> --}}
                                                     <a href="{{ route('formbuilder::forms.edit', $form) }}"
                                                         class="btn btn-primary btn-sm edit-icon" title="Edit form">
                                                         <i class="fa fa-pencil"></i>
@@ -82,11 +93,12 @@
                                                 @endif
 
                                                 @if (Auth::user()->isAdmin() or Auth::user()->isStudent())
-                                                    {{--  <button class="btn btn-primary btn-sm clipboard link-icon"
+                                                    {{-- <button
+                                                        class="btn btn-primary btn-sm clipboard link-icon"
                                                         data-clipboard-text="{{ route('formbuilder::form.render', $form->identifier) }}"
                                                         data-message="" data-original="" title="Copy form URL to clipboard">
                                                         <i class="fa fa-clipboard"></i>
-                                                    </button>  --}}
+                                                    </button> --}}
                                                     <a href="{{ route('formbuilder::form.render', $form->identifier) }}"
                                                         class="btn btn-primary btn-sm  link-icon">
                                                         <i class="fa fa-link"></i>
