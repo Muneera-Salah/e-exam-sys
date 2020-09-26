@@ -13,9 +13,10 @@
     margin-bottom: 0;
 }
 
-.link-icon {
-    background-color: green !important;
-    border-color    : green !important;
+.link-icon,
+.link-icon:hover {
+    background-color: #058e05 !important;
+    border-color    : #058e05 !important;
 }
 
 .edit-icon {
@@ -23,7 +24,11 @@
     border-color    : orange !important;
 }
 
-.back-icon {
+.back-icon,
+.back-icon:hover,
+.back-icon:active,
+.back-icon:not(:disabled):not(.disabled):active,
+.back-icon:focus {
     background-color: gray;
     border-color    : gray;
 }
