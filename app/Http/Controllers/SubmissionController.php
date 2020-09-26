@@ -15,6 +15,7 @@ use jazmy\FormBuilder\Helper;
 use App\Form;
 use App\Submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SubmissionController extends Controller
 {
@@ -37,25 +38,33 @@ class SubmissionController extends Controller
     public function index($form_id)
     {
         $user = auth()->user();
+        if (Auth::user()->isAdmin() or Auth::user()->isExamMaker()) {
 
-        $form = Form::where(['user_id' => $user->id, 'id' => $form_id])
-                    ->with(['user'])
-                    ->firstOrFail();
+            // $form = Form::where(['user_id' => $user->id, 'id' => $form_id])
+            //             ->with(['user'])
+            //             ->firstOrFail();
 
-        $submissions = $form->submissions()
-                            ->with('user')
-                            ->latest()
-                            ->paginate(100);
+            $form = Form::where('id', $form_id)
+                ->with(['user'])
+                ->firstOrFail();
 
-        // get the header for the entries in the form
-        $form_headers = $form->getEntriesHeader();
+            $submissions = $form->submissions()
+                ->with('user')
+                ->latest()
+                ->paginate(100);
 
-        $pageTitle = "Submitted Entries for '{$form->name}'";
+            // get the header for the entries in the form
+            $form_headers = $form->getEntriesHeader();
 
-        return view(
-            'formbuilder::submissions.index',
-            compact('form', 'submissions', 'pageTitle', 'form_headers')
-        );
+            $pageTitle = "Submitted Entries for '{$form->name}'";
+
+            return view(
+                'formbuilder::submissions.index',
+                compact('form', 'submissions', 'pageTitle', 'form_headers')
+            );
+        } else {
+            abort('403');
+        }
     }
 
     /**
@@ -67,18 +76,23 @@ class SubmissionController extends Controller
      */
     public function show($form_id, $submission_id)
     {
-        $submission = Submission::with('user', 'form')
-                            ->where([
-                                'form_id' => $form_id,
-                                'id' => $submission_id,
-                            ])
-                            ->firstOrFail();
+        if (Auth::user()->isAdmin() or Auth::user()->isExamMaker()) {
 
-        $form_headers = $submission->form->getEntriesHeader();
+            $submission = Submission::with('user', 'form')
+                ->where([
+                    'form_id' => $form_id,
+                    'id' => $submission_id,
+                ])
+                ->firstOrFail();
 
-        $pageTitle = "View Submission";
+            $form_headers = $submission->form->getEntriesHeader();
 
-        return view('formbuilder::submissions.show', compact('pageTitle', 'submission', 'form_headers'));
+            $pageTitle = "View Submission";
+
+            return view('formbuilder::submissions.show', compact('pageTitle', 'submission', 'form_headers'));
+        } else {
+            abort('403');
+        }
     }
 
     /**
@@ -90,11 +104,15 @@ class SubmissionController extends Controller
      */
     public function destroy($form_id, $submission_id)
     {
-        $submission = Submission::where(['form_id' => $form_id, 'id' => $submission_id])->firstOrFail();
-        $submission->delete();
+        if (Auth::user()->isAdmin()) {
+            $submission = Submission::where(['form_id' => $form_id, 'id' => $submission_id])->firstOrFail();
+            $submission->delete();
 
-        return redirect()
-                    ->route('formbuilder::forms.submissions.index', $form_id)
-                    ->with('success', 'Submission successfully deleted.');
+            return redirect()
+                ->route('formbuilder::forms.submissions.index', $form_id)
+                ->with('success', 'Submission successfully deleted.');
+        } else {
+            abort('403');
+        }
     }
 }

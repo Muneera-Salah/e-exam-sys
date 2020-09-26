@@ -47,14 +47,14 @@
                                                 <i class="fa fa-eye"></i> View
                                             </a>
 
-                                            <form action="{{ route('formbuilder::forms.submissions.destroy', [$form, $submission]) }}" method="POST" id="deleteSubmissionForm_{{ $submission->id }}" class="d-inline-block">
+                                            {{--  <form action="{{ route('formbuilder::forms.submissions.destroy', [$form, $submission]) }}" method="POST" id="deleteSubmissionForm_{{ $submission->id }}" class="d-inline-block">
                                                 @csrf
                                                 @method('DELETE')
 
                                                 <button type="submit" class="btn btn-danger btn-sm confirm-form" data-form="deleteSubmissionForm_{{ $submission->id }}" data-message="Delete this submission?" title="Delete submission">
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
-                                            </form>
+                                            </form>  --}}
                                         </td>
                                     </tr>
                                 @endforeach

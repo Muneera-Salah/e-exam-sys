@@ -14,14 +14,16 @@
                                 <a href="{{ route('formbuilder::forms.submissions.index', $submission->form->id) }}" class="btn btn-primary float-md-right btn-sm" title="Back To Submissions">
                                     <i class="fa fa-arrow-left"></i> 
                                 </a>
-                                <form action="{{ route('formbuilder::forms.submissions.destroy', [$submission->form, $submission]) }}" method="POST" id="deleteSubmissionForm_{{ $submission->id }}" class="d-inline-block">
-                                    @csrf 
-                                    @method('DELETE')
+                                @if(Auth::user()->isAdmin())
+                                    <form action="{{ route('formbuilder::forms.submissions.destroy', [$submission->form, $submission]) }}" method="POST" id="deleteSubmissionForm_{{ $submission->id }}" class="d-inline-block">
+                                        @csrf 
+                                        @method('DELETE')
 
-                                    <button type="submit" class="btn btn-danger btn-sm rounded-0 confirm-form" data-form="deleteSubmissionForm_{{ $submission->id }}" data-message="Delete submission" title="Delete this submission?">
-                                        <i class="fa fa-trash-o"></i> 
-                                    </button>
-                                </form>
+                                        <button type="submit" class="btn btn-danger btn-sm rounded-0 confirm-form" data-form="deleteSubmissionForm_{{ $submission->id }}" data-message="Delete submission" title="Delete this submission?">
+                                            <i class="fa fa-trash-o"></i> 
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </h5>
@@ -48,19 +50,19 @@
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <strong>Form: </strong> 
+                        <strong>Form: </strong>
                         <span class="float-right">{{ $submission->form->name }}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Submitted By: </strong> 
+                        <strong>Submitted By: </strong>
                         <span class="float-right">{{ $submission->user->name ?? 'Guest' }}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Last Updated On: </strong> 
+                        <strong>Last Updated On: </strong>
                         <span class="float-right">{{ $submission->updated_at->toDayDateTimeString() }}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Submitted On: </strong> 
+                        <strong>Submitted On: </strong>
                         <span class="float-right">{{ $submission->created_at->toDayDateTimeString() }}</span>
                     </li>
                 </ul>

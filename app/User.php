@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use jazmy\FormBuilder\Traits\HasFormBuilderTraits;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -37,4 +38,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin()
+    {
+        $userrole = Auth::user()->role_id;
+        if ($userrole == 1) {
+            return true;
+        }
+        return false;
+    }
+    public function isExamMaker()
+    {
+        $userrole = Auth::user()->role_id;
+        if ($userrole == 2) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isStudent()
+    {
+        $userrole = Auth::user()->role_id;
+        if ($userrole == 3) {
+            return true;
+        }
+        return false;
+    }
 }

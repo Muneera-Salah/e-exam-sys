@@ -16,7 +16,7 @@ class Admin
     public function handle($request, Closure $next)
     {
         if(auth()->user()->role_id != 1){
-            abort('404');
+            abort('403');
         }
         return $next($request);
     }

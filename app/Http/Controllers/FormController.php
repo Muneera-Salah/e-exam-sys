@@ -9,14 +9,17 @@ Last Updated: 12/29/2018
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use jazmy\FormBuilder\Events\Form\FormCreated;
-use jazmy\FormBuilder\Events\Form\FormDeleted;
-use jazmy\FormBuilder\Events\Form\FormUpdated;
+// use jazmy\FormBuilder\Events\Form\FormCreated;
+// use jazmy\FormBuilder\Events\Form\FormDeleted;
+// use jazmy\FormBuilder\Events\Form\FormUpdated;
+use App\Events\Form\FormCreated;
+use App\Events\Form\FormDeleted;
+use App\Events\Form\FormUpdated;
+// use jazmy\FormBuilder\Models\Form;
+use App\Form;
 use jazmy\FormBuilder\Helper;
-use jazmy\FormBuilder\Models\Form;
-// use App\Form;
-use jazmy\FormBuilder\Requests\SaveFormRequest;
 use Illuminate\Http\Request;
+use jazmy\FormBuilder\Requests\SaveFormRequest;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -30,7 +33,7 @@ class FormController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware('admin.role');
+        $this->middleware('admin.role')->except(['index']);
     }
 
     /**
@@ -112,7 +115,12 @@ class FormController extends Controller
     public function show($id)
     {
         $user = auth()->user();
-        $form = Form::where(['user_id' => $user->id, 'id' => $id])
+        // $form = Form::where(['user_id' => $user->id, 'id' => $id])
+        //             ->with('user')
+        //             ->withCount('submissions')
+        //             ->firstOrFail();
+
+        $form = Form::where('id' , $id)
                     ->with('user')
                     ->withCount('submissions')
                     ->firstOrFail();
@@ -132,7 +140,8 @@ class FormController extends Controller
     {
         $user = auth()->user();
 
-        $form = Form::where(['user_id' => $user->id, 'id' => $id])->firstOrFail();
+        // $form = Form::where(['user_id' => $user->id, 'id' => $id])->firstOrFail();
+        $form = Form::where('id', $id)->firstOrFail();
 
         $pageTitle = 'Edit Form';
 
@@ -154,7 +163,8 @@ class FormController extends Controller
     public function update(SaveFormRequest $request, $id)
     {
         $user = auth()->user();
-        $form = Form::where(['user_id' => $user->id, 'id' => $id])->firstOrFail();
+        // $form = Form::where(['user_id' => $user->id, 'id' => $id])->firstOrFail();
+        $form = Form::where('id', $id)->firstOrFail();
 
         $input = $request->except('_token');
 
@@ -182,7 +192,8 @@ class FormController extends Controller
     public function destroy($id)
     {
         $user = auth()->user();
-        $form = Form::where(['user_id' => $user->id, 'id' => $id])->firstOrFail();
+        // $form = Form::where(['user_id' => $user->id, 'id' => $id])->firstOrFail();
+        $form = Form::where('id', $id)->firstOrFail();
         $form->delete();
 
         // dispatch the event
