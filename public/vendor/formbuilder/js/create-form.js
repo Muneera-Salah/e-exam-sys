@@ -30,9 +30,10 @@ jQuery(function() {
         ],
         disableFields: [
             'button', // buttons are not needed since we are the one handling the submission
+            'autocomplete',
         ],  // field types that should not be shown
         disabledAttrs: [
-            // 'access',
+            'access',
         ],
         typeUserDisabledAttrs: {
             'file': [
